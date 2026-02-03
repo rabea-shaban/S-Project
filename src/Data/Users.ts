@@ -1,24 +1,16 @@
 export interface IUser {
-  id: string;
-  firstName: string;
-  lastName: string;
   email: string;
   password: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-  remember: boolean;
+  firstName: string;
+  lastName: string;
+  remember?: boolean;
 }
-const user: IUser = {
-  id: "1",
-  firstName: "Rabea",
-  lastName: "shaban",
-  email: "rabea@gmail.com",
+
+const User: IUser = {
+  email: "admin@demo.com",
   password: "123456",
-  role: "user",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  remember: false,
+  firstName: "Rabea",
+  lastName: "Shaban",
 };
 
-export default user;
+export default User;

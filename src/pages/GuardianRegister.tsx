@@ -1,13 +1,31 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Heart, MapPin } from "lucide-react";
+import { useForm } from "react-hook-form";
+import {
+  FiArrowLeft,
+  FiUser,
+  FiHeart,
+  FiMapPin,
+  FiMail,
+  FiPhone,
+  FiHome,
+  FiCreditCard,
+} from "react-icons/fi";
+import type { FormDataGuardian } from "../Data/Guardian";
+import Input from "../Components/ui/Input ";
 
 const GuardianRegister = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormDataGuardian>({
+    mode: "onBlur",
+  });
 
-    // TODO: API call
+  const onSubmit = (data: FormDataGuardian) => {
+    console.log("Form Data:", data);
     alert("Account created & token generated ✅");
   };
 
@@ -19,14 +37,14 @@ const GuardianRegister = () => {
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-600 mb-6"
         >
-          <ArrowLeft size={18} />
+          <FiArrowLeft />
           Back
         </button>
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-[#e7efe9] rounded-xl flex items-center justify-center">
-            <User className="text-[#5f7f65]" size={20} />
+            <FiUser className="text-[#5f7f65]" />
           </div>
           <div>
             <h1 className="text-xl font-semibold text-gray-800">
@@ -38,61 +56,133 @@ const GuardianRegister = () => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Guardian Information */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Guardian Info */}
           <div className="bg-white rounded-2xl shadow p-6">
-            <h2 className="flex items-center gap-2 text-[#5f7f65] font-medium mb-4">
+            <h2 className="font-medium text-[#5f7f65] mb-4">
               🛡️ Guardian Information
             </h2>
 
             <div className="space-y-4">
-              <input
-                placeholder="Full Name (as in National ID)"
-                className="input"
+              {/* Guardian Name */}
+              <Input
+                icon={<FiUser />}
+                placeholder="Full Name"
+                error={errors.guardianName}
+                {...register("guardianName", {
+                  required: "Full name is required",
+                })}
               />
-              <input placeholder="National ID" className="input" />
-              <input type="email" placeholder="Email" className="input" />
-              <input placeholder="Phone" className="input" />
-              <input placeholder="Address" className="input" />
+
+              {/* National ID */}
+              <Input
+                icon={<FiCreditCard />}
+                placeholder="National ID"
+                error={errors.guardianNationalId}
+                {...register("guardianNationalId", {
+                  required: "National ID is required",
+                })}
+              />
+
+              {/* Email */}
+              <Input
+                icon={<FiMail />}
+                placeholder="Email"
+                error={errors.guardianEmail}
+                {...register("guardianEmail", {
+                  required: "Email is required",
+                })}
+              />
+
+              {/* Phone */}
+              <Input
+                icon={<FiPhone />}
+                placeholder="Phone"
+                error={errors.guardianPhone}
+                {...register("guardianPhone", {
+                  required: "Phone is required",
+                })}
+              />
+
+              {/* Address */}
+              <Input
+                icon={<FiHome />}
+                placeholder="Address"
+                error={errors.guardianAddress}
+                {...register("guardianAddress", {
+                  required: "Address is required",
+                })}
+              />
             </div>
           </div>
 
-          {/* Patient Information */}
+          {/* Patient Info */}
           <div className="bg-white rounded-2xl shadow p-6">
-            <h2 className="flex items-center gap-2 text-[#e07a6a] font-medium mb-4">
-              ❤️ Patient Information
+            <h2 className="font-medium text-[#e07a6a] mb-4 flex items-center gap-2">
+              <FiHeart /> Patient Information
             </h2>
 
             <div className="space-y-4">
-              <input
-                placeholder="Full Name (as in National ID)"
-                className="input"
+              <Input
+                icon={<FiUser />}
+                placeholder="Full Name"
+                error={errors.patientName}
+                {...register("patientName", {
+                  required: "Full name is required",
+                })}
               />
-              <input placeholder="National ID" className="input" />
-              <input type="email" placeholder="Email" className="input" />
-              <input placeholder="Phone" className="input" />
-              <input placeholder="Address" className="input" />
+
+              <Input
+                icon={<FiCreditCard />}
+                placeholder="National ID"
+                error={errors.patientNationalId}
+                {...register("patientNationalId", {
+                  required: "National ID is required",
+                })}
+              />
+
+              <Input
+                icon={<FiMail />}
+                placeholder="Email"
+                error={errors.patientEmail}
+                {...register("patientEmail", {
+                  required: "Email is required",
+                })}
+              />
+
+              <Input
+                icon={<FiPhone />}
+                placeholder="Phone"
+                error={errors.patientPhone}
+                {...register("patientPhone", {
+                  required: "Phone is required",
+                })}
+              />
+
+              <Input
+                icon={<FiHome />}
+                placeholder="Address"
+                error={errors.patientAddress}
+                {...register("patientAddress", {
+                  required: "Address is required",
+                })}
+              />
             </div>
           </div>
 
           {/* Location */}
           <div className="bg-white rounded-2xl shadow p-6">
-            <h2 className="flex items-center gap-2 text-[#5f7f65] font-medium mb-4">
-              📍 Patient&apos;s Default Location
+            <h2 className="font-medium text-[#5f7f65] mb-4 flex items-center gap-2">
+              <FiMapPin /> Patient&apos;s Default Location
             </h2>
 
             <button
               type="button"
               className="w-full border-2 border-dashed rounded-xl p-6
-              flex flex-col items-center gap-2 text-gray-500 hover:border-[#7a9b80]"
+              flex flex-col items-center gap-2 text-gray-500"
             >
-              <div className="w-10 h-10 bg-[#e7efe9] rounded-xl flex items-center justify-center">
-                <MapPin className="text-[#5f7f65]" />
-              </div>
-              <p className="font-medium">Pick a location</p>
-              <span className="text-sm">
-                Map pin · GPS · or manual coordinates
-              </span>
+              <FiMapPin size={24} />
+              <p>Pick a location</p>
             </button>
           </div>
 
@@ -106,23 +196,6 @@ const GuardianRegister = () => {
           </button>
         </form>
       </div>
-
-      {/* Input Style */}
-      <style>
-        {`
-          .input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            outline: none;
-          }
-          .input:focus {
-            border-color: #7a9b80;
-            box-shadow: 0 0 0 2px rgba(122,155,128,0.2);
-          }
-        `}
-      </style>
     </div>
   );
 };
